@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import { Route, Routes,useNavigate } from 'react-router-dom';
+import {Home} from "./Home"
+import {Login} from './Login';
+import {Welcome} from './Welcome'
+import {Test} from './Test'
+import { useSelector} from 'react-redux';
+function App() {        
+    const user = useSelector(state => state.User);
+    const navigate = useNavigate();
+    
+    // if (!user.Loged_in && window.location.pathname !=="/Login") {
+    //     navigate('/Login');
+    // }
+    return (
+        <Routes>
+            <Route path="/" element={<Welcome/>} />
+            <Route path="/Login" element={<Login />} />
+            {true ? <Route path="/Home" element={<Home />} /> : null}
+            {true ? <Route path="/Test" element={<Test />} /> : null}
+        </Routes>
+    );
 }
 
 export default App;
