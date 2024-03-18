@@ -4,8 +4,7 @@ WORKDIR /app
 
 COPY package.json .
 
-RUN npm install web-vitals &&\
-    npm install --silent && \
+RUN npm install --silent && \
     npm install react-bootstrap bootstrap --silent
 
 COPY . .   
