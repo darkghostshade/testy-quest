@@ -8,6 +8,7 @@ import { useSelector} from 'react-redux';
 function App() {        
     const user = useSelector(state => state.User);
     const navigate = useNavigate();
+    console.log(user,navigate)
     
     // if (!user.Loged_in && window.location.pathname !=="/Login") {
     //     navigate('/Login');

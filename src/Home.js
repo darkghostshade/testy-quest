@@ -27,10 +27,10 @@ export class Home extends Component {
 
   renderTestorExamImage=(progress)=>{
     if(progress < 100){
-      return <img src={chest} ></img>;
+      return <img src={chest} alt="chest" ></img>;
     }
     else{
-      return <img src={DungeonExam} ></img>
+      return <img src={DungeonExam} alt="DungeonDoor" ></img>
     }
   }
   renderTestorExamButton=(progress,questName)=>{

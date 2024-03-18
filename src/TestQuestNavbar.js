@@ -18,14 +18,14 @@ const Navs = () => {
   if (user.Loged_in) {
     return( 
         <li class="nav-item">
-          <a class="nav-link" onClick={handleLogOut}>Logout</a>
+          <p class="nav-link" onClick={handleLogOut}>Logout</p>
         </li>
     ) ;
   }
   else{
     return( 
         <li class="nav-item">
-          <a class="nav-link" onClick={handleLogOut}>Logout</a>
+          <p class="nav-link" onClick={handleLogOut}>Logout</p>
         </li>
     ) ;
     
