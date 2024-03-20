@@ -1,3 +1,5 @@
+
+
 /* Add this CSS code to your project */
 .quest-container {
     display: flex;
@@ -6,13 +8,15 @@
   }
   
   .quest-card {
-    width: 80vw;
-    margin: 10px;
-    padding: 20px;
-    font-size: 14px;
+  border: 20px solid transparent;
+  padding: 15px;
+  border-image: url(../image/Picture1.png) 30 round;
+  width: 80vw;
+  margin: 10px;
+  padding: 20px;
+  font-size: 14px;
   padding: 6px 16px;
   font-weight: 400;
-  border: none;
   outline: none;
   color: #000;
   background: linear-gradient(
@@ -26,17 +30,9 @@
     #999 95%
   );
   text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
-    border: 2px solid #ccc;
-    border-radius: 10px;
-    box-shadow: #333;
-    background-color: #f9f9f9;
-    display: flex;
-    flex-direction: column;
-    font-family: "EB Garamond", sans-serif; /* EB Garamond font */
+  
   }
   
   
@@ -70,8 +66,11 @@
     font-size: 14px;
     color: #666;
   }
-  .quest-banner{
-    background: rgb(142, 43, 64);
+  .hover-nav:hover{
+    color:white !important;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;  
+    text-underline-offset: 4px;
   }
   .golden-text {
     background-image: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
@@ -121,6 +120,9 @@
     }
   }
 }
+  .invis-navbar{
+    background: rgba(255, 255, 255, 0);
+  }
   .quest-banner{
     background: rgb(142, 43, 64);
     

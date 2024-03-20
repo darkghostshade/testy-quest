@@ -3,6 +3,7 @@ import axios from 'axios';
 import './css/QuestStyles.css'; // Import the CSS file
 import chest from "./image/chest.png"
 import DungeonExam from "./image/DungeonExam.png"
+import { ApiConnectionReplacement } from '../src/Enviromental Variables/APIConnection';
 
 export class Home extends Component {
   constructor(props) {
@@ -15,7 +16,7 @@ export class Home extends Component {
 
   componentDidMount() {
     // Fetch quests data from dummy API using Axios
-    axios.get('https://localhost:44303/TestManager')
+    axios.get(ApiConnectionReplacement() + '/TestManager')
       .then(response => {
         this.setState({ quests: response.data, isLoading: false });
       })
@@ -45,7 +46,7 @@ export class Home extends Component {
 
   renderQuestCards = () => {
     return this.state.quests.map((quest, index) => (
-      <div key={index} className="quest-card card-shine-effect">
+      <div key={index} className="quest-card ">
         <div class = "row">
         <div class="col-4">
           {this.renderTestorExamImage(quest.progress)}
@@ -92,7 +93,7 @@ export class Home extends Component {
         <h2 class="text-center gold-text ">Welcome to the Quest Program</h2>
         <p class="text-center gold-text ">Here, adventurers can embark on various quests to explore the world.</p>
         </div>
-        <hr />
+        
 
         {this.state.isLoading ? (
           <p>Loading quests...</p>
