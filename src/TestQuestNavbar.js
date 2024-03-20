@@ -18,16 +18,12 @@ const Navs = () => {
   if (user.Loged_in) {
     return( 
         <li class="nav-item">
-          <p class="nav-link" onClick={handleLogOut}>Logout</p>
+          <p class="nav-link hover-nav text-warning" onClick={handleLogOut}> ◈ Logout</p>
         </li>
     ) ;
   }
   else{
-    return( 
-        <li class="nav-item">
-          <p class="nav-link" onClick={handleLogOut}>Logout</p>
-        </li>
-    ) ;
+
     
   } 
 };
@@ -36,18 +32,15 @@ export class TestQuestNavbar extends React.Component {
   render() {
     
     return (
-    <nav class=" quest-banner navbar navbar-expand-lg navbar-dark  mb-1">
-        <a class=" ms-1 navbar-brand" href="./Home">Testy Quest</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <nav class=" invis-navbar navbar navbar-expand-lg navbar-dark warning mb-1">
+        <a class="navbar-brand" href="./Home"> Testy Quest</a>
         <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="./Home">Home</a>
+        <ul class="navbar-nav ">
+            <li class="nav-item ">
+                <a class="nav-link text-warning hover-nav" href="./Home"> ◈ Home</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="./Login">About</a>
+            <li class="nav-item aling ">
+                <a class="nav-link text-warning hover-nav" href="./Login">◈ About</a>
             </li>
             <Navs/>
            
