@@ -68,3 +68,19 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+# deploy k3d cluster on port 6550
+
+```bash
+k3d cluster create testy-quest --api-port 6550
+
+kubectl cluster-info
+
+```
+## portforward 
+```bash
+kubectl port-forward <podname>  <outside port>:<inside Port> -n testy-quest
+```
+
+
