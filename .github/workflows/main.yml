@@ -52,6 +52,7 @@ jobs:
   
   Deploy_to_azure:
     name: Deploy to Azure
+    needs: Deploy
     runs-on: ubuntu-latest
 
     steps:
