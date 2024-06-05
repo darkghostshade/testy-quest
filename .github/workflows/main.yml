@@ -79,10 +79,10 @@ jobs:
 
       - name: Terraform Init
         run: terraform init
-        working-directory: .github/infra  # Pointing to the infra directory
+        working-directory: infra  # Pointing to the infra directory
 
       - name: Terraform Apply
         env:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
         run: terraform apply -auto-approve -var="firebase_config=${{ secrets.FIREBASE_CONFIG }}" -var="github_sha=${{ github.sha }}" -var-file="azure.tf"
-        working-directory: .github/infra  # Pointing to the infra directory
+        working-directory: infra  # Pointing to the infra directory
