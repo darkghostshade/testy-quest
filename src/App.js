@@ -1,24 +1,28 @@
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Home } from "./Home";
+import { Login } from './Login';
+import { Welcome } from './Welcome';
+import { QuestBoardManager } from './QuestBoardManager';
+import { AddQuestForm } from './AddQuestForm';
+import { Test } from './Test';
+import Cookies from 'js-cookie';
 
-import { Route, Routes,useNavigate } from 'react-router-dom';
-import {Home} from "./Home"
-import {Login} from './Login';
-import {Welcome} from './Welcome'
-import {Test} from './Test'
-import { useSelector} from 'react-redux';
-function App() {        
-    const user = useSelector(state => state.User);
+function App() {
     const navigate = useNavigate();
-    console.log(user,navigate)
-    
-    // if (!user.Loged_in && window.location.pathname !=="/Login") {
-    //     navigate('/Login');
-    // }
+
+    // Check if the user is not logged in and the token is not available in the cookie
+    if (!Cookies.get('firebaseToken') && window.location.pathname !== "/Login") {
+        navigate('/Login');
+    }
+
     return (
         <Routes>
-            <Route path="/" element={<Welcome/>} />
+            <Route path="/" element={<Welcome />} />
             <Route path="/Login" element={<Login />} />
-            {true ? <Route path="/Home" element={<Home />} /> : null}
-            {true ? <Route path="/Test" element={<Test />} /> : null}
+            {Cookies.get('firebaseToken') !== undefined && <Route path="/Home" element={<Home />} />}
+            {Cookies.get('firebaseToken') !== undefined  && <Route path="/QuestBoardManager" element={<QuestBoardManager />} />}
+            {Cookies.get('firebaseToken') !== undefined  && <Route path="/QuestBoardManager/AddQuestForm" element={<AddQuestForm />} />}
+            {Cookies.get('firebaseToken') !== undefined  && <Route path="/Test" element={<Test />} />}
         </Routes>
     );
 }

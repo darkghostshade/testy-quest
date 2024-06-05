@@ -8,7 +8,7 @@
   }
   
   .quest-card {
-  border: 20px solid transparent;
+  border: 15px solid transparent;
   padding: 15px;
   border-image: url(../image/Picture1.png) 30 round;
   width: 80vw;
@@ -34,7 +34,33 @@
   cursor: pointer;
   
   }
-  
+  .sm-quest-card {
+    border: 10px solid transparent;
+    padding: 15px;
+    border-image: url(../image/Picture1.png) 30 round;
+    width: 25vw;
+    margin: 10px;
+    padding: 20px;
+    font-size: 14px;
+    padding: 6px 16px;
+    font-weight: 400;
+    outline: none;
+    color: #000;
+    background: linear-gradient(
+      45deg,
+      #999 5%,
+      #fff 10%,
+      #ccc 30%,
+      #ddd 50%,
+      #ccc 70%,
+      #fff 80%,
+      #999 95%
+    );
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+    
+    cursor: pointer;
+    
+    }
   
   .quest-title {
     font-size: 24px;
@@ -60,7 +86,14 @@
     height: 100%;
     border-radius: 10px;
   }
-  
+  .sm-quest-icon {
+    width: 50px; 
+    height: 50px; 
+    position: relative;
+    top: 25%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
   .quest-good-questions {
     margin-top: 10px;
     font-size: 14px;
@@ -128,6 +161,8 @@
     
     color:rgb(255, 202, 58);
   }
+  
+  
   .rounded{
     border-radius: 10px;
   }
@@ -149,6 +184,12 @@
   #navigation,.navbar .navbar-default{
     background-image: url("https://www.creativefabrica.com/wp-content/uploads/2023/05/17/Dark-brown-wooden-texture-background-Graphics-69889019-1.png"); /* assuming img folder is one step back from css*/
   }
-
+  
+  .form-label {
+    color: white; /* Set the label text color to white */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Apply black drop shadow */
+    font-size: 1.2em; /* Increase font size */
+    font-weight: bold; /* Optionally, make the text bold */
+  }
   
 

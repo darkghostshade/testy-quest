@@ -5,7 +5,7 @@ export const ApiConnectionReplacement = () => {// Initialize state with an initi
     }
     else {
         console.log(process.env.APICONNECTION);
-        console.log("https://localhost:44303")
-        return ("https://localhost:44303");
+        console.log("https://api.localhost:7068")
+        return ("https://localhost:7068");
     } // Return the current state value
 }
