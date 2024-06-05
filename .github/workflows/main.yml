@@ -1,4 +1,4 @@
-name: :build and deploy
+name: build-and-deploy
 
 on:
   push:
@@ -48,4 +48,41 @@ jobs:
         with:
           context: .
           push: true
-          tags: darkghostshade/testy-quest-front-end:latest
+          tags: darkghostshade/testy-quest-front-end:${{ github.sha }}
+  
+  Deploy_to_azure:
+    name: Deploy to Azure
+    needs: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v1
+        with:
+          version: 'latest'
+
+      - name: Azure Kubernetes Set Context
+        run: az aks get-credentials --resource-group testy-quest_group --name testy-quest
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.7.5
+
+      - name: Terraform Init
+        run: terraform init
+        working-directory: infra  # Pointing to the infra directory
+
+      - name: Terraform Apply
+        env:
+          FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
+        run: terraform apply -auto-approve -var="firebase_config=${{ secrets.FIREBASE_CONFIG }}" -var="github_sha=${{ github.sha }}" -var-file="azure.tf"
+        working-directory: infra  # Pointing to the infra directory
