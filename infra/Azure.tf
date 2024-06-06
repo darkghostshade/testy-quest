@@ -652,7 +652,7 @@ resource "kubernetes_secret" "firebase_config" {
   }
 
   data = {
-    firebaseconfig_json = base64encode(var.firebase_config)
+    firebaseconfig_json = var.firebase_config
   }
 }
 
