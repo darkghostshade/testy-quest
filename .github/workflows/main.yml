@@ -84,5 +84,5 @@ jobs:
       - name: Terraform Apply
         env:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
-        run: terraform apply -auto-approve -var="firebase_config=$(jsonencode ${{ secrets.FIREBASE_CONFIG }}))" -var="github_sha=${{ github.sha }}" 
+        run: terraform apply -auto-approve -var="firebase_config=${{ secrets.FIREBASE_CONFIG }}" -var="github_sha=${{ github.sha }}" 
         working-directory: infra  # Pointing to the infra directory
