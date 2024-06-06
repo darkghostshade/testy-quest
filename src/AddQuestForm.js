@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import { ApiConnectionReplacement } from '../src/Enviromental Variables/APIConnection';
 
 export class AddQuestForm extends Component {
   constructor(props) {

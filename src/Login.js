@@ -6,7 +6,6 @@ import { LoginUser } from './userSlice';
 import Cookies from 'js-cookie'; // Import Cookies
 
 const LoginPage = () => {
-  const user = useSelector(state => state.User);
   const dispatch = useDispatch();
 
   const [email, setEmail] = useState('');
