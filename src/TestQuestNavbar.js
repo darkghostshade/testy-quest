@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector,useDispatch } from 'react-redux';
+import {useDispatch } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Logout } from './userSlice';
 import Cookies from 'js-cookie'; // Import Cookies
