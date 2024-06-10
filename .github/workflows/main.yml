@@ -67,7 +67,7 @@ jobs:
         run: pip install checkov
   
       - name: Run Checkov scan
-        run: checkov --quiet  --soft-fail-on -d .
+        run: checkov --quiet  --soft-fail-on SOFT_FAIL_ON -d .
   
   Deploy_to_azure:
     name: Deploy to Azure
