@@ -52,7 +52,6 @@ jobs:
 
   Checkov_scan:
       name: QA of Terraform
-      needs: Deploy
       runs-on: ubuntu-latest
       steps:
       - name: Checkout code
@@ -67,7 +66,7 @@ jobs:
         run: pip install checkov
   
       - name: Run Checkov scan
-        run: checkov --quiet  --soft-fail-on SOFT_FAIL_ON -d .
+        run: checkov --quiet  --soft-fail-on SOFT_FAIL_ON --hard-fail-on HARD -d .
   
   Deploy_to_azure:
     name: Deploy to Azure
