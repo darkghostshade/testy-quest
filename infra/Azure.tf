@@ -239,12 +239,33 @@ resource "kubernetes_manifest" "kafka_ui_deployment" {
                   containerPort = 8080
                 }
               ]
-               env = [
+              env = [
                 {
                   name  = "DYNAMIC_CONFIG_ENABLED"
                   value = "true"
                 }
               ]
+              resources = {
+                limits = {
+                  cpu    = "500m"  
+                  memory = "512Mi" 
+                }
+                requests = {
+                  cpu    = "200m"  
+                  memory = "256Mi" 
+                }
+              }
+              liveness_probe = {
+                http_get = {
+                  path   = "/health"
+                  port   = 8080
+                }
+                initial_delay_seconds = 15
+                period_seconds        = 10
+                timeout_seconds       = 5
+                success_threshold     = 1
+                failure_threshold     = 3
+              }
             }
           ]
         }
@@ -253,6 +274,7 @@ resource "kubernetes_manifest" "kafka_ui_deployment" {
   }
   depends_on = [kubernetes_namespace.testy_quest_namespace]
 }
+
 
 resource "kubernetes_manifest" "kafka_ui_service" {
   manifest = {
@@ -359,6 +381,16 @@ resource "kubernetes_manifest" "kafka" {
                 }
                 
               ]
+              resources = {
+                requests = {
+                  cpu    = "100m"  
+                  memory = "128Mi" 
+                }
+                limits = {
+                  cpu    = "1000m"  
+                  memory = "256Mi" 
+                }
+              }
               volumeMounts = [
                 {
                   name       = "kafka-data"
@@ -462,20 +494,42 @@ resource "kubernetes_manifest" "mongodb" {
                   value = "root"
                 },
                 {
-                  
                   name  = "MONGO_INITDB_ROOT_PASSWORD"
                   value = "password123"
                 }
               ]
+              resources = {
+                limits = {
+                  cpu    = "500m" 
+                  memory = "1000Mi" 
+                }
+                requests = {
+                  cpu    = "200m"  
+                  memory = "256Mi" 
+                }
+              }
+              securityContext = {
+                capabilities = {
+                  drop = ["NET_RAW"]
+                }
+              }
+               readinessProbe = {
+                httpGet = {
+                  path   = "/"
+                  port   = 27017
+                }
+                initialDelaySeconds = 10
+                periodSeconds       = 5
+              }
             }
           ]
-          
         }
       }
     }
   }
   depends_on = [kubernetes_namespace.testy_quest_namespace]
 }
+
 
 resource "kubernetes_manifest" "express_service" {
   manifest = {
@@ -606,6 +660,78 @@ resource "kubernetes_manifest" "exam_website_deployment" {
                   value = "https://test-managerapi-service"
                 }
               ]
+              resource "kubernetes_manifest" "exam_website_deployment" {
+  manifest = {
+    apiVersion = "apps/v1"
+    kind       = "Deployment"
+    metadata   = {
+      name      = "exam-website-deployment"
+      namespace = "testy-quest"
+    }
+    spec       = {
+      replicas = 1
+      selector = {
+        matchLabels = {
+          app = "exam-website"
+        }
+      }
+      template = {
+        metadata = {
+          labels = {
+            app = "exam-website"
+          }
+        }
+        spec     = {
+          containers = [
+            {
+              name  = "exam-website"
+              image = "darkghostshade/testy-quest-front-end:${var.github_sha}"
+              ports = [
+                {
+                  containerPort = 8081
+                }
+              ]
+              env   = [
+                {
+                  name  = "WATCHPACK_POLLING"
+                  value = "true"
+                },
+                {
+                  name  = "APICONNECTION"
+                  value = "https://test-managerapi-service"
+                }
+              ]
+              resources = {
+                limits = {
+                  cpu    = "500m"  
+                  memory = "512Mi" 
+                }
+                requests = {
+                  cpu    = "200m"  
+                  memory = "256Mi"
+                }
+              }
+              livenessProbe = {
+                httpGet = {
+                  path   = "/"
+                  port   = 8081
+                }
+                initialDelaySeconds = 10
+                periodSeconds       = 5
+              }
+              securityContext = {
+                capabilities = {
+                  drop = ["NET_RAW"]
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+  depends_on = [kubernetes_namespace.testy_quest_namespace]
+}
             }
           ]
         }

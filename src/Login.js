@@ -1,19 +1,33 @@
 import React, { useState } from 'react';
-import {useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { LoginUser } from './userSlice';
 import Cookies from 'js-cookie'; // Import Cookies
+import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
 
 const LoginPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // Initialize navigate
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    dispatch(LoginUser({ email, password })); // Dispatching the Login action with email and password
+    try {
+      var hello =await dispatch(LoginUser({ email, password }));
+      if(hello.error.message === "Rejected" ){
+      setError('Email or password is incorrect');
+      }
+      else{
+        navigate('/Home');
+      } 
+    } catch (err) {
+        setError('An error occurred. Please try again later.');
+    }
+    
   };
 
   if (Cookies.get('firebaseToken') !== undefined) {
@@ -28,6 +42,7 @@ const LoginPage = () => {
                 <h3>Login</h3>
               </div>
               <div className="card-body">
+                {error && <div className="alert alert-danger">{error}</div>}
                 <form onSubmit={handleLogin}>
                   <div className="form-group">
                     <label htmlFor="email">Email</label>
@@ -51,21 +66,15 @@ const LoginPage = () => {
                       required 
                     />
                   </div>
-                  <button type="submit" className="btn btn-primary btn-block mt-3">Login</button>
+                  <button type="submit" id="accept-button"className="btn btn-primary btn-block mt-3">Login</button>
                 </form>
               </div>
             </div>
           </div>
         </div>
-        <div className="mt-3">
-              <h5>Firebase Token:</h5>
-              <p>{Cookies.get('firebaseToken')}</p>
-            </div>
       </div>
     )
-    
   }
-  
 };
 
 export class Login extends React.Component {
