@@ -68,16 +68,26 @@ jobs:
       - name: Run Cypress tests
         run: npx cypress run
 
-  sonarcloud:
+  Sonarcloud:
+    name: SonarCloud Code Analysis
+    needs: build
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-    - name: SonarCloud Scan
-      uses: sonarsource/sonarcloud-github-action@v2
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@v2
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectKey=darkghostshade_testy-quest
+            -Dsonar.organization=darkghostshade
+            -Dsonar.sources=.
+            -Dsonar.host.url=https://sonarcloud.io
+        
         
   Checkov_scan:
       name: QA of Terraform
