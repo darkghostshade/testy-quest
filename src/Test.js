@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { ApiConnectionReplacement,QuestionApiConnectionReplacement } from '../src/Enviromental Variables/APIConnection';
 
 export class Test extends Component {
   constructor(props) {
@@ -25,7 +26,7 @@ export class Test extends Component {
     const firebaseToken = Cookies.get('firebaseToken');
 
     if (firebaseToken) {
-      axios.get('http://localhost:5233/NewQuestion/GetQuestions', {
+      axios.get(`${QuestionApiConnectionReplacement}/NewQuestion/GetQuestions`, {
         headers: {
           'Authorization': `Bearer ${firebaseToken}`,
           'accept': '*/*'
@@ -88,7 +89,7 @@ export class Test extends Component {
 
     if (firebaseToken) {
       // Send POST request to API endpoint
-      axios.post('http://api.testy-quest.nl/Answerwriter/ProduceAnswer', data, {
+      axios.post(`${ApiConnectionReplacement}/Answerwriter/ProduceAnswer`, data, {
         headers: {
           'Authorization': `Bearer ${firebaseToken}`,
           'Content-Type': 'application/json'

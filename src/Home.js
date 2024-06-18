@@ -4,6 +4,7 @@ import './css/QuestStyles.css'; // Import the CSS file
 import chest from "./image/chest.png"
 import DungeonExam from "./image/DungeonExam.png"
 import { QuestionApiConnectionReplacement } from '../src/Enviromental Variables/APIConnection';
+import Cookies from 'js-cookie';
 
 export class Home extends Component {
   constructor(props) {
@@ -15,15 +16,20 @@ export class Home extends Component {
   }
 
   componentDidMount() {
-    // Fetch quests data from dummy API using Axios
-    axios.get(QuestionApiConnectionReplacement() + '/NewQuestion/Quests')
-      .then(response => {
-        this.setState({ quests: response.data, isLoading: false });
-      })
-      .catch(error => {
-        console.error('Error fetching quests:', error);
-        this.setState({ isLoading: false });
-      });
+    const token = Cookies.get('firebaseToken');
+    
+    axios.get(`${QuestionApiConnectionReplacement}/NewQuestion/Quests`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    .then(response => {
+      this.setState({ quests: response.data, isLoading: false });
+    })
+    .catch(error => {
+      console.error('Error fetching quests:', error);
+      this.setState({ isLoading: false, error: 'Failed to fetch data' });
+    });
   }
 
   renderTestorExamImage=(progress)=>{
