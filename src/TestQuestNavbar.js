@@ -3,16 +3,20 @@ import {useDispatch } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Logout } from './userSlice';
 import Cookies from 'js-cookie'; // Import Cookies
+import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
+
+
 
 
 const Navs = () => {
-
+  const navigate = useNavigate(); // Initialize navigate
   const dispatch = useDispatch(); // Getting the dispatch function
   
   const handleLogOut = (e) => {
     console.log('logedout')
     e.preventDefault();
     dispatch(Logout()); // Dispatching the Login action
+    navigate('/Login');
   };
   if (Cookies.get('firebaseToken') !== undefined){
     return( 
@@ -49,7 +53,6 @@ export class TestQuestNavbar extends React.Component {
                 <a class="nav-link text-warning hover-nav" href="../Login">◈ About</a>
             </li>
             <Navs/>
-           
         </ul>
         </div>
       </nav>

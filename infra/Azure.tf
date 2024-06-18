@@ -922,10 +922,36 @@ resource "kubernetes_manifest" "question_managerapi_deployment" {
                   name = "DatabaseConnection"
                   value = "mongodb://root:password123@mongodb:27017/"
                 },
+                {
+                  name = "FIREBASE_CONFIG"
+                  valueFrom = {
+                    secretKeyRef = {
+                      name = "firebase-config"
+                      key  = "firebaseconfig_json"
+                    }
+                  }
+                }
               ]
+              volumeMounts = [
+                {
+                  name      = "firebase-config-volume"
+                  mountPath = "/etc/config"
+                  subPath   = "firebaseconfig.json"
+                }
+              ]
+            }
+            
+          ]
+          volumes = [
+            {
+              name = "firebase-config-volume"
+              secret = {
+                secretName = "firebase-config"
+              }
             }
           ]
         }
+        
       }
     }
   }
