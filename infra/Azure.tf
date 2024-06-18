@@ -127,7 +127,7 @@ resource "kubernetes_manifest" "grafana_service" {
           targetPort = 3000
         }
       ]
-      type = "LoadBalancer"
+      
     }
   }
   depends_on = [kubernetes_manifest.grafana_deployment]
@@ -245,27 +245,6 @@ resource "kubernetes_manifest" "kafka_ui_deployment" {
                   value = "true"
                 }
               ]
-              resources = {
-                limits = {
-                  cpu    = "500m"  
-                  memory = "512Mi" 
-                }
-                requests = {
-                  cpu    = "200m"  
-                  memory = "256Mi" 
-                }
-              }
-              liveness_probe = {
-                http_get = {
-                  path   = "/health"
-                  port   = 8080
-                }
-                initial_delay_seconds = 15
-                period_seconds        = 10
-                timeout_seconds       = 5
-                success_threshold     = 1
-                failure_threshold     = 3
-              }
             }
           ]
         }
@@ -381,16 +360,6 @@ resource "kubernetes_manifest" "kafka" {
                 }
                 
               ]
-              resources = {
-                requests = {
-                  cpu    = "100m"  
-                  memory = "128Mi" 
-                }
-                limits = {
-                  cpu    = "1000m"  
-                  memory = "256Mi" 
-                }
-              }
               volumeMounts = [
                 {
                   name       = "kafka-data"
@@ -498,29 +467,7 @@ resource "kubernetes_manifest" "mongodb" {
                   value = "password123"
                 }
               ]
-              resources = {
-                limits = {
-                  cpu    = "500m" 
-                  memory = "1000Mi" 
-                }
-                requests = {
-                  cpu    = "200m"  
-                  memory = "256Mi" 
-                }
-              }
-              securityContext = {
-                capabilities = {
-                  drop = ["NET_RAW"]
-                }
-              }
-               readinessProbe = {
-                httpGet = {
-                  path   = "/"
-                  port   = 27017
-                }
-                initialDelaySeconds = 10
-                periodSeconds       = 5
-              }
+              
             }
           ]
         }
@@ -551,6 +498,7 @@ resource "kubernetes_manifest" "express_service" {
           targetPort = 8081
         }
       ]
+      type = "LoadBalancer"
     }
   }
   depends_on = [kubernetes_manifest.express]
@@ -647,48 +595,7 @@ resource "kubernetes_manifest" "exam_website_deployment" {
               image = "darkghostshade/testy-quest-front-end:${var.github_sha}"
               ports = [
                 {
-                  containerPort = 8081
-                }
-              ]
-              env   = [
-                {
-                  name  = "WATCHPACK_POLLING"
-                  value = "true"
-                },
-                {
-                  name  = "APICONNECTION"
-                  value = "https://test-managerapi-service"
-                }
-              ]
-              resource "kubernetes_manifest" "exam_website_deployment" {
-  manifest = {
-    apiVersion = "apps/v1"
-    kind       = "Deployment"
-    metadata   = {
-      name      = "exam-website-deployment"
-      namespace = "testy-quest"
-    }
-    spec       = {
-      replicas = 1
-      selector = {
-        matchLabels = {
-          app = "exam-website"
-        }
-      }
-      template = {
-        metadata = {
-          labels = {
-            app = "exam-website"
-          }
-        }
-        spec     = {
-          containers = [
-            {
-              name  = "exam-website"
-              image = "darkghostshade/testy-quest-front-end:${var.github_sha}"
-              ports = [
-                {
-                  containerPort = 8081
+                  containerPort = 3000
                 }
               ]
               env   = [
@@ -704,26 +611,13 @@ resource "kubernetes_manifest" "exam_website_deployment" {
               resources = {
                 limits = {
                   cpu    = "500m"  
-                  memory = "512Mi" 
+                  memory = "1Gi" 
                 }
                 requests = {
                   cpu    = "200m"  
                   memory = "256Mi"
                 }
               }
-              livenessProbe = {
-                httpGet = {
-                  path   = "/"
-                  port   = 8081
-                }
-                initialDelaySeconds = 10
-                periodSeconds       = 5
-              }
-              securityContext = {
-                capabilities = {
-                  drop = ["NET_RAW"]
-                }
-              }
             }
           ]
         }
@@ -732,14 +626,7 @@ resource "kubernetes_manifest" "exam_website_deployment" {
   }
   depends_on = [kubernetes_namespace.testy_quest_namespace]
 }
-            }
-          ]
-        }
-      }
-    }
-  }
-  depends_on = [kubernetes_namespace.testy_quest_namespace]
-}
+
 
 resource "kubernetes_manifest" "exam_website_service" {
   manifest = {
@@ -815,12 +702,12 @@ resource "kubernetes_manifest" "answer_managerapi_deployment" {
               ]
               resources       = {
                 requests = {
-                  cpu    = "100m" # CPU request
+                  cpu    = "100m" 
                   memory = "128Mi"
                 }
                 limits = {
-                  cpu    = "600m" # CPU limit (1 core)
-                  memory = "256Mi"
+                  cpu    = "600m" 
+                  memory = "500Mi"
                 }
               }
               env = [
@@ -907,7 +794,7 @@ resource "kubernetes_manifest" "answer_managerapi_hpa" {
         name       = "answer-managerapi-deployment"
       }
       minReplicas    = 1
-      maxReplicas    = 10
+      maxReplicas    = 20
       metrics        = [
         {
           type    = "Resource"
@@ -1087,7 +974,7 @@ resource "kubernetes_manifest" "question_managerapi_hpa" {
         name       = "question-managerapi-deployment"
       }
       minReplicas    = 1
-      maxReplicas    = 10
+      maxReplicas    = 4
       metrics        = [
         {
           type    = "Resource"
@@ -1112,6 +999,10 @@ resource "kubernetes_manifest" "testy_quest_ingress" {
     metadata   = {
       name      = "testy-quest-ingress"
       namespace = "testy-quest"
+      # annotations = {
+      #   "nginx.ingress.kubernetes.io/limit-rps" = "10"
+      #   "nginx.ingress.kubernetes.io/limit-connections" ="1"
+      # }
     }
     spec       = {
       ingressClassName = "external-nginx"

@@ -3,7 +3,7 @@ import axios from 'axios';
 import './css/QuestStyles.css'; // Import the CSS file
 import chest from "./image/chest.png"
 import DungeonExam from "./image/DungeonExam.png"
-import { ApiConnectionReplacement } from '../src/Enviromental Variables/APIConnection';
+import { QuestionApiConnectionReplacement } from '../src/Enviromental Variables/APIConnection';
 
 export class Home extends Component {
   constructor(props) {
@@ -16,7 +16,7 @@ export class Home extends Component {
 
   componentDidMount() {
     // Fetch quests data from dummy API using Axios
-    axios.get(ApiConnectionReplacement() + '/TestManager')
+    axios.get(QuestionApiConnectionReplacement() + '/NewQuestion/Quests')
       .then(response => {
         this.setState({ quests: response.data, isLoading: false });
       })

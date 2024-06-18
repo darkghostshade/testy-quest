@@ -33,7 +33,7 @@ export class Test extends Component {
 
   render() {
     return (
-      <div className="container ">
+      <div inert className="container ">
         <h2>Math Question</h2>
         <hr />
         <div class="quest-card align-center">
