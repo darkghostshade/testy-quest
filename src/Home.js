@@ -18,7 +18,7 @@ export class Home extends Component {
   componentDidMount() {
     const token = Cookies.get('firebaseToken');
     
-    axios.get(`${QuestionApiConnectionReplacement}/NewQuestion/Quests`, {
+    axios.get(`${QuestionApiConnectionReplacement()}/NewQuestion/Quests`, {
       headers: {
         'Authorization': `Bearer ${token}`
       }

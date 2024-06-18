@@ -603,10 +603,7 @@ resource "kubernetes_manifest" "exam_website_deployment" {
                   name  = "WATCHPACK_POLLING"
                   value = "true"
                 },
-                {
-                  name  = "APICONNECTION"
-                  value = "https://test-managerapi-service"
-                }
+                
               ]
               resources = {
                 limits = {

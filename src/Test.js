@@ -26,7 +26,7 @@ export class Test extends Component {
     const firebaseToken = Cookies.get('firebaseToken');
 
     if (firebaseToken) {
-      axios.get(`${QuestionApiConnectionReplacement}/NewQuestion/GetQuestions`, {
+      axios.get(`${QuestionApiConnectionReplacement()}/NewQuestion/GetQuestions`, {
         headers: {
           'Authorization': `Bearer ${firebaseToken}`,
           'accept': '*/*'
@@ -37,7 +37,7 @@ export class Test extends Component {
       })
       .catch(error => {
         console.error('Error fetching data:', error);
-        this.setState({ error: 'Failed to fetch data', isLoading: false });
+        this.setState({ error: 'Failed to fetch data'});
         // Dummy data to show if fetch fails
         const dummyData = [{
           "questionID": "Q123",
@@ -89,7 +89,7 @@ export class Test extends Component {
 
     if (firebaseToken) {
       // Send POST request to API endpoint
-      axios.post(`${ApiConnectionReplacement}/Answerwriter/ProduceAnswer`, data, {
+      axios.post(`${ApiConnectionReplacement()}/Answerwriter/ProduceAnswer`, data, {
         headers: {
           'Authorization': `Bearer ${firebaseToken}`,
           'Content-Type': 'application/json'
