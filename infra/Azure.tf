@@ -280,27 +280,6 @@ resource "kubernetes_manifest" "kafka_ui_service" {
   depends_on = [kubernetes_manifest.kafka_ui_deployment]
 }
 
-resource "kubernetes_manifest" "kafka_data_pvc" {
-  manifest = {
-    apiVersion = "v1"
-    kind       = "PersistentVolumeClaim"
-    metadata   = {
-      name      = "kafka-data-claim"
-      namespace = "testy-quest"
-    }
-    spec       = {
-      accessModes = ["ReadWriteOnce"]
-      resources   = {
-        requests = {
-          storage = "1Gi" # Adjust the storage size as needed
-        }
-      }
-    }
-  }
-
-  depends_on = [kubernetes_namespace.testy_quest_namespace]
-}
-
 resource "kubernetes_manifest" "kafka" {
   manifest = {
     apiVersion = "apps/v1"
@@ -358,7 +337,6 @@ resource "kubernetes_manifest" "kafka" {
                   name  = "DEFAULT_REPLICATION_FACTOR"
                   value = "3"
                 }
-                
               ]
               volumeMounts = [
                 {
@@ -368,17 +346,23 @@ resource "kubernetes_manifest" "kafka" {
               ]
             }
           ]
-          volumes = [
-            {
-              name = "kafka-data"
-              persistentVolumeClaim = {
-                claimName = "kafka-data-claim"
-              }
-            }
-            
-          ]
         }
       }
+      volumeClaimTemplates = [
+        {
+          metadata = {
+            name = "kafka-data"
+          }
+          spec = {
+            accessModes = ["ReadWriteOnce"]
+            resources = {
+              requests = {
+                storage = "1Gi"  # Adjust the storage size as needed
+              }
+            }
+          }
+        }
+      ]
     }
   }
   depends_on = [kubernetes_namespace.testy_quest_namespace]
@@ -997,7 +981,7 @@ resource "kubernetes_manifest" "question_managerapi_hpa" {
         name       = "question-managerapi-deployment"
       }
       minReplicas    = 1
-      maxReplicas    = 4
+      maxReplicas    = 10
       metrics        = [
         {
           type    = "Resource"

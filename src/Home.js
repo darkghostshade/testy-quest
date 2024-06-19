@@ -5,6 +5,7 @@ import chest from "./image/chest.png"
 import DungeonExam from "./image/DungeonExam.png"
 import { QuestionApiConnectionReplacement } from '../src/Enviromental Variables/APIConnection';
 import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
 
 export class Home extends Component {
   constructor(props) {
@@ -14,7 +15,7 @@ export class Home extends Component {
       isLoading: true
     };
   }
-
+  
   componentDidMount() {
     const token = Cookies.get('firebaseToken');
     
@@ -74,12 +75,18 @@ export class Home extends Component {
   }
 
   startQuest = (questName) => {
+    const navigate = useNavigate(); // Initialize navigate
     console.log("Starting quest:", questName);
+    navigate('/Test');
+
     // Implement logic to start the quest here
   }
   startDungeon = (questName) => {
+    const navigate = useNavigate(); // Initialize navigate
     console.log("Starting Dungeon:", questName);
-    // Implement logic to start the quest here
+    navigate('/Test');
+
+    
   }
 
   getProgressColor = (progress) => {
