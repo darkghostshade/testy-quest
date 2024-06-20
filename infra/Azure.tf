@@ -702,6 +702,10 @@ resource "kubernetes_manifest" "answer_managerapi_deployment" {
                   }
                 },
                 {
+                  name = "DatabaseConnection"
+                  value = "mongodb://root:password123@mongodb:27017/"
+                },
+                {
                   name  = "JwtSecret"
                   value = "Rx92dmN9Mk6U5JqYi8AIhbWUBAkZgGmqXI0UGa6+tJ7P2LgEfMi+AiDXaXJB7iKMyZ3hf9BiLmIg/Q0Iv20DjcpCth+0zyvkC3CDtO9diF5J+q/gIzPm79/V9oUI6TUKcygKInVvynJDneJ4nlFp+TJ3heiOqtT6f0WSovtzgtIZrvGmFD/XG9D2SyH0tzUXPN3JpmkXTTkED3kqXHRXuhJc1AgaWGxc+sBQUSsTnr3PEZGTjK8RIQ0uFdlm22oJg7Xa6RG/K0bcs/LANUrN1GNZutlUfrLNOZuhfUizab0vPk9JnBw+6k6vfXdNi6woCZTdD0eIorlJonFxIK4LP7a3xAyvD/F1ZYxHlSX8SzdjpPAMXmvkH9kuHiLmXGRmU+vGGryaocsfyy5pSJ9pJTxK4bb+v60N8hJJji3mvxHkyNP5sfGs7HDwGR4QNNiB+ak7ZVhG8xxyAlrZrU2S9qrSWMYcQgY+wk5VpFgtOyjBxdjrxZYkqCHOq+gKIEUd8c2VFScvoPaM2uvHPFcRe9aeMXNG0n7v6AeAjhCs+8zInnVXj4NUahXvGoYe3PhVJYyXjlbSxitBog4KBdCyVr+i7g6XSYTR264V/BRd9I9m3a81l0mc7WpSdPhWoDrYPeNzCdEQ0n1dzGUCsFF8hbBuEijPszeDsKh+1iNLGnR53abwV4m1OCVCjlogIjraWoztZIdWqa+OJ8rz8c4vkth6amAfsVT8R269XSdEcnEpK18MuFQLccbax4V6pqmgUFhLwuZL6QnMfrtO/3hIJvDj8pVMPr2GkuYT8ndISsQ="
                 },
@@ -1008,7 +1012,7 @@ resource "kubernetes_manifest" "testy_quest_ingress" {
       namespace = "testy-quest"
       # annotations = {
       #   "nginx.ingress.kubernetes.io/limit-rps" = "10"
-      #   "nginx.ingress.kubernetes.io/limit-connections" ="1"
+      #   "nginx.ingress.kubernetes.io/limit-connections" ="2"
       # }
     }
     spec       = {
