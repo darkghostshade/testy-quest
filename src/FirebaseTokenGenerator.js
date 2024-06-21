@@ -8,11 +8,11 @@ export const FirebaseTokenGenerator = () => {
     const [token, setToken] = useState('');
     const [error, setError] = useState('');
 
-    const generateToken = async (role) => {
+    const generateToken = async (role, name) => {
         try {
             const response = await axios.post(
-                `${ApiConnectionReplacement()}/firebase/generate${role}Token`,
-                { name },
+                `${ApiConnectionReplacement()}/firebase/generate${role}Token?name=${name}`,
+                {},
                 {
                     headers: {
                         'Authorization': `Bearer ${Cookies.get('firebaseToken')}`,
