@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { ApiConnectionReplacement} from '../src/Enviromental Variables/APIConnection';
+import Cookies from 'js-cookie';
 
 export const FirebaseTokenGenerator = () => {
     const [name, setName] = useState('');
@@ -9,7 +10,16 @@ export const FirebaseTokenGenerator = () => {
 
     const generateToken = async (role) => {
         try {
-            const response = await axios.post(`${ApiConnectionReplacement()}/firebase/generate${role}Token`, { name });
+            const response = await axios.post(
+                `${ApiConnectionReplacement()}/firebase/generate${role}Token`,
+                { name },
+                {
+                    headers: {
+                        Authorization: `Bearer ${Cookies.get('firebaseToken')}`,
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
             setToken(response.data);
             setError('');
         } catch (error) {
