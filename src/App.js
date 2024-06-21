@@ -5,6 +5,7 @@ import { Welcome } from './Welcome';
 import { QuestBoardManager } from './QuestBoardManager';
 import { AddQuestForm } from './AddQuestForm';
 import { Test } from './Test';
+import { AddQuestionForm }  from './AddQuestionForm';
 import Cookies from 'js-cookie';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
             {Cookies.get('firebaseToken') !== undefined  && <Route path="/QuestBoardManager" element={<QuestBoardManager />} />}
             {Cookies.get('firebaseToken') !== undefined  && <Route path="/QuestBoardManager/AddQuestForm" element={<AddQuestForm />} />}
             {Cookies.get('firebaseToken') !== undefined  && <Route path="/Test" element={<Test />} />}
+            {Cookies.get('firebaseToken')!== undefined  && <Route path="/QuestionForm" element={<AddQuestionForm />} />}
         </Routes>
     );
 }

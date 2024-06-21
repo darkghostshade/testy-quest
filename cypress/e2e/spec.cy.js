@@ -12,7 +12,7 @@ describe('test if i can login', () => {
   })
 })
 
-describe('test if  i can take a test ', () => {
+describe('can i take a exam ', () => {
   it('passes', () => {
     cy.visit('/login')
     cy.get('.form-check-input').check({ multiple: true })
@@ -33,7 +33,7 @@ describe('test if  i can take a test ', () => {
   })
 })
 
-describe('test if i can can answer test question', () => {
+describe('exam submision', () => {
   it('passes', () => {
     cy.viewport(1366 , 768)
     cy.visit('/login')
@@ -57,7 +57,5 @@ describe('test if i can can answer test question', () => {
         expect(res.statusCode).to.equal(200)
       })
     })
-
-
   })
 })
