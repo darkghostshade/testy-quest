@@ -15,7 +15,7 @@ export const FirebaseTokenGenerator = () => {
                 { name },
                 {
                     headers: {
-                        Authorization: `Bearer ${Cookies.get('firebaseToken')}`,
+                        'Authorization': `Bearer ${Cookies.get('firebaseToken')}`,
                         'Content-Type': 'application/json'
                     }
                 }
