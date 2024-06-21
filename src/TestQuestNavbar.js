@@ -22,11 +22,16 @@ const Navs = () => {
     return( 
       <div class = "navbar-nav">
         <li class="nav-item aling ">
-         <a class="nav-link text-warning hover-nav" href="../QuestBoardManager">◈ Manage quest board</a>
+         <a class="nav-link text-warning hover-nav" href="../QuestBoardManager">◈ Manage Quest Board</a>
         </li>
-        
+        <li class="nav-item aling ">
+        <a class="nav-link text-warning hover-nav" href="../QuestionForm">◈ Question Creation</a>
+        </li>
         <li class="nav-item aling ">
           <p class="nav-link hover-nav text-warning" onClick={handleLogOut}> ◈ Logout</p>
+        </li>
+        <li class="nav-item aling ">
+          <a class="nav-link hover-nav text-warning" href="../GetLoginToken"> ◈ Get Token</a>
         </li>
       </div> 
          
@@ -50,7 +55,10 @@ export class TestQuestNavbar extends React.Component {
                 <a class="nav-link text-warning hover-nav" href="./Home"> ◈ Home</a>
             </li>
             <li class="nav-item aling ">
-                <a class="nav-link text-warning hover-nav" href="../Login">◈ About</a>
+                <a class="nav-link text-warning hover-nav" href="../Login">◈ Login</a>
+            </li>
+            <li class="nav-item aling ">
+                <a class="nav-link text-warning hover-nav" href="../Register">◈ Register</a>
             </li>
             <Navs/>
         </ul>
