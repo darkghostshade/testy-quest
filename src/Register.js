@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { ApiConnectionReplacement} from '../src/Enviromental Variables/APIConnection';
+import Cookies from 'js-cookie';
 
 export const Register = () => {
     const [formData, setFormData] = useState({
@@ -20,7 +21,14 @@ export const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`${ApiConnectionReplacement()}/firebase/createUserWithRole`, formData);
+            const response = await axios.post(`${ApiConnectionReplacement()}/firebase/createUserWithRole`, formData,
+            {
+                headers: {
+                    'Authorization': `Bearer ${Cookies.get('firebaseToken')}`,
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
             setSuccessMessage('User registered successfully!');
             setError('');
             console.log(response.data); // Log the response for debugging

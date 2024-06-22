@@ -16,7 +16,7 @@ terraform {
   }
 }
 
-# Retrieve AKS cluster information
+
 provider "azurerm" {
   features {}
 }
@@ -357,7 +357,7 @@ resource "kubernetes_manifest" "kafka" {
             accessModes = ["ReadWriteOnce"]
             resources = {
               requests = {
-                storage = "1Gi"  # Adjust the storage size as needed
+                storage = "1Gi"  
               }
             }
           }
@@ -894,11 +894,11 @@ resource "kubernetes_manifest" "question_managerapi_deployment" {
               ]
               resources       = {
                 requests = {
-                  cpu    = "100m" # CPU request
+                  cpu    = "100m" 
                   memory = "128Mi"
                 }
                 limits = {
-                  cpu    = "400m" # CPU limit (1 core)
+                  cpu    = "400m" 
                   memory = "256Mi"
                 }
               }
@@ -1010,10 +1010,10 @@ resource "kubernetes_manifest" "testy_quest_ingress" {
     metadata   = {
       name      = "testy-quest-ingress"
       namespace = "testy-quest"
-      # annotations = {
-      #   "nginx.ingress.kubernetes.io/limit-rps" = "10"
-      #   "nginx.ingress.kubernetes.io/limit-connections" ="2"
-      # }
+       annotations = {
+         "nginx.ingress.kubernetes.io/limit-rps" = "10"
+         "nginx.ingress.kubernetes.io/limit-connections" ="2"
+       }
     }
     spec       = {
       ingressClassName = "external-nginx"

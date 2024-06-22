@@ -11,7 +11,7 @@ describe('test if i can login', () => {
     })
   })
 })
-// cypress/integration/addQuestionForm.spec.js
+
 
 describe('Add Question Form', () => {
   beforeEach(() => {
