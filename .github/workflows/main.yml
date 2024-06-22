@@ -13,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x, 18.x]
+        node-version: [16.x, 20.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
@@ -49,10 +49,67 @@ jobs:
           context: .
           push: true
           tags: darkghostshade/testy-quest-front-end:${{ github.sha }}
+  cypress-tests:
+    name: Cypress E2E Tests
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 20.x
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Run Cypress tests
+        run: npx cypress run
+
+  Sonarcloud:
+    name: SonarCloud Code Analysis
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@v2
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectKey=darkghostshade_testy-quest
+            -Dsonar.organization=darkghostshade
+            -Dsonar.sources=.
+            -Dsonar.host.url=https://sonarcloud.io
+        
+        
+  Checkov_scan:
+      name: QA of Terraform
+      runs-on: ubuntu-latest
+      steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+  
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+  
+      - name: Install Checkov
+        run: pip install checkov
+  
+      - name: Run Checkov scan
+        run: checkov --quiet  --soft-fail-on SOFT_FAIL_ON --hard-fail-on HARD -d .
   
   Deploy_to_azure:
     name: Deploy to Azure
-    needs: Deploy
+    needs:  Checkov_scan
     runs-on: ubuntu-latest
 
     steps:

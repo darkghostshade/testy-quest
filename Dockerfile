@@ -9,7 +9,6 @@ RUN npm install --silent && \
 
 COPY . .   
 
-COPY nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 3000
 

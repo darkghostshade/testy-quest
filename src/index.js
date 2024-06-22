@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store'; // Adjust the import path if needed
 import { TestQuestNavbar } from './TestQuestNavbar';
+import CookieConsent from './handlers/CookieConsent'
 
 
 
@@ -16,6 +17,7 @@ root.render(
         <BrowserRouter>
             <TestQuestNavbar/>
             <App />
+            <CookieConsent></CookieConsent>
         </BrowserRouter>
         </Provider>
     </React.StrictMode>
